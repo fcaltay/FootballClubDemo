@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/general.html :: baseHeader(~{:: title})}">
+    <meta charset="UTF-8">
+    <title>Overview all clubs</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/general.html :: navbar}"></div>
+
+<div class="container">
+<h1>Overview all clubs</h1>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Founding Year</th>
+        <th>Trophies In The Museum</th>
+        <th></th><!-- Buy -->
+        <th></th><!-- Delete -->
+
+    </tr>
+    <tr th:each="club : ${allFootballClubs}">
+        <td th:text="${club.naam}"></td>
+        <td th:text="${club.foundingYear}"></td>
+        <td>
+            <span th:text="${club.getNumberofATrophiesInTheMuseum()}"></span>/<span th:text="${club.getNumberOfTrophies()}"></span>
+        </td>
+
+        <td><a th:href="@{/trophy/new/{clubId}(clubId=${club.clubId})}">Add trophy</a></td>
+        <td><a th:href="@{/footballclub/delete/{clubId}(clubId=${club.clubId})}">Delete</a></td>
+
+
+    </tr>
+</table>
+<a th:href="@{/footballclub/new}">Add a new football club</a>
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+</body>
+</html>
