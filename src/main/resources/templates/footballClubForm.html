@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="~{fragments/general :: baseHeader(~{:: title})}">
-  <title>Put a title here!</title>
+  <title>Football Club Form</title>
 </head>
 <body>
 
@@ -10,19 +10,59 @@
 <div class="container">
   <h1>Create a new football club</h1>
 
-  <form th:action="@{/footballclub/new}" method="post" th:object="${newFootballClub}">
-    <table>
-      <tr>
-        <td>Club Naam</td>
-        <td><input type="text" th:field="*{naam}"/></td>
-      </tr>
-      <tr>
-        <td>Founding Year</td>
-        <td><input type="text" th:field="*{foundingYear}" /></td>
-      </tr>
-    </table>
+  <form class="row g-3" th:action="@{/footballclub/new}" method="post" th:object="${newFootballClub}">
+    <input type="hidden" th:field="*{clubId}">
+<!--    The row class in Bootstrap is used to create a row-based layout. The g-3 class sets gaps between rows and columns, -->
+<!--    providing moderate spacing between elements. -->
+<!--    The align-items-center class vertically centers all items within the row, giving a more balanced and modern appearance.-->
 
-    <input type="submit" value="Save Football Club" />
+    <div class="row g-3 align-items-center">
+      <div class="col-1">
+        <label for="name" class="col-form-label">Club Naam</label>
+      </div>
+      <div class="col-5">
+        <input type="text" id="name" class="form-control" th:field="*{name}" aria-describedby="nameHelpInline">
+      </div>
+      <div class="col-6">
+                <span id="nameHelpInline" class="form-text">
+                </span>
+      </div>
+    </div>
+
+    <div class="row g-3 align-items-center">
+      <div class="col-1">
+        <label for="foundingYear" class="col-form-label">Founding Year</label>
+      </div>
+      <div class="col-5">
+        <input type="text" id="foundingYear" class="form-control" th:field="*{foundingYear}" aria-describedby="foundingYearHelpInline">
+      </div>
+      <div class="col-6">
+                <span id="foundingYearHelpInline" class="form-text">
+                </span>
+      </div>
+    </div>
+
+    <div class="row g-3 align-items-center">
+      <div class="col-1">
+        <label for="colors" class="col-form-label">Color</label>
+      </div>
+      <div class="col-3">
+        <select id="colors" class="form-select" th:field="*{colors}" aria-describedby="colorsHelpInline" multiple>
+          <option th:each="colorOption : ${allColors}"
+                  th:text="${colorOption.name}"
+                  th:value="${colorOption.colorId}">
+          </option>
+        </select>
+      </div>
+      <div class="col-6">
+                <span id="colorsHelpInline" class="form-text">
+                </span>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <button type="submit" class="btn btn-outline-primary">Save Football Club</button>
+    </div>
   </form>
 </div>
 

@@ -14,6 +14,7 @@ public class Trophy {
     @Id @GeneratedValue
     private Long trophyId;
 
+
     private Boolean available;
 
     public Trophy() {

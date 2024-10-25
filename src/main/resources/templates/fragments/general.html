@@ -4,23 +4,33 @@
     <meta charset="UTF-8">
     <title th:replace="${title}"></title>
 
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" href="/css/library.css" />
 </head>
 <body>
+
 <div th:fragment="navbar">
     <ul class="nav justify-content-center">
         <li class="nav-item">
             <a class="nav-link" th:href="@{/footballclub/overview}">Football Clubs</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/color/overview}">Colors</a>
+        </li>
+
     </ul>
 </div>
+
 <div th:fragment="footer">
-    <footer><p class="text-center text text-muted">Copyright Furkan Altay &copy;2024</p></footer>
+    <footer><p class="text-center text text-muted">Copyright Furkan Altay &copy; 2024</p></footer>
 </div>
+
 <div th:fragment="bottomScripts">
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </div>
+
 </body>
 </html>
+

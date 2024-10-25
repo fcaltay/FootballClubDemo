@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/general :: baseHeader(~{:: title})}">
+    <title>colorOverview.html</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<div class="container">
+    <form action="/color/new" method="post" th:object="${newColor}">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+        <tr th:each="color : ${allColors}">
+            <td th:text="${color.name}"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{name}" /></td>
+            <td><input type="submit" value="save color" /></td>
+        </tr>
+    </table>
+    </form>
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+</body>
+</html>
