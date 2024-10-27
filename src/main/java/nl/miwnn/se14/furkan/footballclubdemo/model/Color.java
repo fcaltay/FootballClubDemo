@@ -20,7 +20,7 @@ public class Color {
     @Column(unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "colors", cascade = CascadeType.ALL)
+    @ManyToMany
     private Set<Color> colors;
 
     public Long getColorId() {
@@ -33,5 +33,9 @@ public class Color {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Color> getColors() {
+        return colors;
     }
 }
