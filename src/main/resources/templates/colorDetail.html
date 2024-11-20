@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/general :: baseHeader(~{:: title})}">
     <title th:text="|${colorToBeShown.name} details|"></title>
 </head>
@@ -10,19 +10,20 @@
 <div class="container">
     <h1 th:text="|${colorToBeShown.name} details|"></h1>
 
-    <h2>Colors</h2>
-    <!-- TODO: Show books as cards -->
+    <h2>Associated Football Clubs:</h2>
     <ul>
-        <li th:each="color : ${colorToBeShown.colors}">
-            <a th:href="@{/color/detail/{colorName}(colorName = ${color.name})}" th:text="${color.name}"></a>
+        <li th:each="club : ${colorToBeShown.footballClubs}">
+            <a th:href="@{/footballclub/details/{name}(name=${club.name})}" th:text="${club.name}"></a> <!-- Detay sayfasına yönlendirme -->
         </li>
     </ul>
 
     <h2>Actions</h2>
     <ul>
-        <li><a th:href="@{/color/edit/{colorName}(colorName = ${colorToBeShown.name})}">Edit color</a></li>
-        <li><a th:href="@{/color/delete/{colorName}(colorName = ${colorToBeShown.name})}">Delete color</a></li>
+        <li><a th:href="@{/color/edit/{colorName}(colorName=${colorToBeShown.name})}">Edit color</a></li>
+        <li><a th:href="@{/color/delete/{colorName}(colorName=${colorToBeShown.name})}">Delete color</a></li>
     </ul>
+
+    <a th:href="@{/color/overview}">Back to Overview</a>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>

@@ -1,14 +1,11 @@
 package nl.miwnn.se14.furkan.footballclubdemo.model;
 
-import com.mysql.cj.jdbc.jmx.LoadBalanceConnectionGroupManager;
 import jakarta.persistence.*;
-
-import java.util.List;
 import java.util.Set;
 
 /**
- * @author Furkan Altay
- * Color of a football club
+ * Color entity representing a color used by football clubs.
+ * This entity has a Many-to-Many self-referential relationship.
  */
 @Entity
 public class Color {
@@ -16,12 +13,21 @@ public class Color {
     @Id @GeneratedValue
     private Long colorId;
 
-    // @NotBlank
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
 
-    @ManyToMany
-    private Set<Color> colors;
+    // Self-referential Many-to-Many relationship
+    @ManyToMany(mappedBy = "colors", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<FootballClub> footballClubs;
+    //Burada hata veriyor
+
+    // Constructors, Getters and Setters
+
+    public Color() {}
+
+    public Color(String name) {
+        this.name = name;
+    }
 
     public Long getColorId() {
         return colorId;
@@ -35,7 +41,18 @@ public class Color {
         this.name = name;
     }
 
-    public Set<Color> getColors() {
-        return colors;
+    public Set<FootballClub> getFootballClubs() {
+        return footballClubs;
+    }
+
+    public void setColorId(Long colorId) {
+        this.colorId = colorId;
+    }
+    @PreRemove
+    private void removeAssociationsWithFootballClubs() {
+        for (FootballClub club : footballClubs) {
+            club.getColors().remove(this);
+        }
+        footballClubs.clear();
     }
 }

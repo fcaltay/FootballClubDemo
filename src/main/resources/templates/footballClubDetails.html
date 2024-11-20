@@ -24,16 +24,15 @@
         <li><a th:href="@{/trophy/new/{clubId}(clubId=${footballClub.clubId})}">Add trophy</a></li>
     </ul>
 
-    <h2>Trophies</h2>
-    <table>
+    <h2>Footballers</h2>
+    <table class="table table-striped table-bordered">
         <tr>
-            <th>Trophy ID</th>
-            <th>Name</th>
+            <th>Footballer name</th>
+            <th>Position</th>
         </tr>
-        <tr th:each="trophy : ${footballClub.trophies}">
-            <td th:text="${trophy.trophyId}"></td>
-            <td th:if="${trophy.available}">
-                //<a th:href="@{/trophy/borrow/{trophyId}(trophyId=${trophy.trophyId})}"></a>
+        <tr th:each="footballer : ${footballersInClub}">
+            <td th:text="${footballer.footballerName}"></td>
+            <td th:text="${footballer.footballerPosition}"></td>
         </tr>
     </table>
 </div>

@@ -4,6 +4,7 @@ import jdk.jfr.Category;
 import nl.miwnn.se14.furkan.footballclubdemo.model.FootballClub;
 import nl.miwnn.se14.furkan.footballclubdemo.repositories.ColorRepository;
 import nl.miwnn.se14.furkan.footballclubdemo.repositories.FootballClubRepository;
+import nl.miwnn.se14.furkan.footballclubdemo.repositories.FootballerRepository;
 import nl.miwnn.se14.furkan.footballclubdemo.repositories.TrophyRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +26,13 @@ public class FootballClubController {
     private final FootballClubRepository footballClubRepository;
     private final TrophyRepository trophyRepository;
     private final ColorRepository colorRepository;
+    private final FootballerRepository footballerRepository;
 
-    public FootballClubController(FootballClubRepository footballClubRepository, TrophyRepository trophyRepository, ColorRepository colorRepository) {
+    public FootballClubController(FootballClubRepository footballClubRepository, TrophyRepository trophyRepository, ColorRepository colorRepository, FootballerRepository footballerRepository) {
         this.footballClubRepository = footballClubRepository;
         this.trophyRepository = trophyRepository;
         this.colorRepository = colorRepository;
+        this.footballerRepository = footballerRepository;
     }
 
     @GetMapping({"/", "/footballclub/overview"})
@@ -55,8 +58,7 @@ public class FootballClubController {
     public String showFootballClubForm(Model datamodel) {
         datamodel.addAttribute("newFootballClub", new FootballClub());
         datamodel.addAttribute("allColors", colorRepository.findAll());
-        //  It creates a new instance of FootballClub, adds it to the datamodel, and returns the footballClubForm view,
-        //  which displays a form for creating a new football club.
+
         return "footballClubForm";
     }
 
@@ -82,12 +84,8 @@ public class FootballClubController {
     private String saveOrUpdateFootballClub(@ModelAttribute("newFootballClub") FootballClub footballClubToBeSaved, BindingResult result) {
         if (result.hasErrors()) {
             System.err.println(result.getAllErrors());
-            // It takes the submitted FootballClub object from the form and checks for validation errors using BindingResult.
-            // If there are errors, it redirects to the overview page; otherwise, it saves the new club to the database
-            // and redirects to the overview page.
             return "redirect:/footballclub/overview";
         }
-
         footballClubRepository.save(footballClubToBeSaved);
         return "redirect:/footballclub/overview";
     }
@@ -99,5 +97,6 @@ public class FootballClubController {
         // then redirects back to the overview page.
         return "redirect:/footballclub/overview";
     }
+
 
 }

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/general :: baseHeader(~{:: title})}">
+    <title>footballerform.html</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<div class="container">
+
+    <h1>Create a new footballer</h1>
+
+    <form class="row g-3" th:action="@{/footballer/new}" method="post" th:object="${newFootballer}">
+        <input type="hidden" th:field="*{footballerId}">
+
+
+        <div class="row g-3 align-items-center">
+            <div class="col-1">
+                <label for="name" class="col-form-label">Footballer Name</label>
+            </div>
+            <div class="col-5">
+                <input type="text" id="name" class="form-control" th:field="*{footballerName}" aria-describedby="nameHelpInline">
+            </div>
+            <div class="col-6">
+                <span id="nameHelpInline" class="form-text"></span>
+            </div>
+        </div>
+
+
+        <div class="row g-3 align-items-center">
+            <div class="col-1">
+                <label for="position" class="col-form-label">Position</label>
+            </div>
+            <div class="col-5">
+                <input type="text" id="position" class="form-control" th:field="*{footballerPosition}" aria-describedby="positionHelpInline">
+            </div>
+            <div class="col-6">
+                <span id="positionHelpInline" class="form-text"></span>
+            </div>
+        </div>
+
+
+        <div class="row g-3 align-items-center">
+            <div class="col-1">
+                <label for="team" class="col-form-label">Team</label>
+            </div>
+            <div class="col-5">
+                <input type="text" id="team" class="form-control" th:field="*{team}" aria-describedby="teamHelpInline">
+            </div>
+            <div class="col-6">
+                <span id="teamHelpInline" class="form-text"></span>
+            </div>
+        </div>
+
+
+        <div class="row g-3 align-items-center">
+            <div class="col-1">
+                <label for="imageUrl" class="col-form-label">Image URL</label>
+            </div>
+            <div class="col-5">
+                <input type="text" id="imageUrl" class="form-control" th:field="*{imageUrl}" placeholder="Enter image URL" aria-describedby="imageHelpInline">
+            </div>
+        </div>
+
+        <div class="col-4">
+            <button type="submit" class="btn btn-outline-primary">Save Footballer</button>
+        </div>
+
+    </form>
+
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+</body>
+</html>

@@ -1,9 +1,11 @@
 package nl.miwnn.se14.furkan.footballclubdemo.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
-import java.util.List;
 import java.util.Set;
+
 
 /**
  * @author Furkan Altay
@@ -20,12 +22,15 @@ public class FootballClub {
     private Long clubId;
     private String name;
     private Integer foundingYear;
+    private String imageUrl;
     // The @Id annotation specifies that this field (in this case, clubId) is the primary key in the database.
     // Each football club will have a unique identifier.
     // The @GeneratedValue annotation indicates that the value of this field will be automatically generated.
     // When a new FootballClub instance is created, this field's value will be set automatically
     // by the database (typically as an incrementing number).
-    @OneToMany(mappedBy = "footballClub", cascade = CascadeType.ALL, orphanRemoval = true)
+
+
+    @OneToMany(mappedBy = "footballClub", cascade = CascadeType.ALL)
     private Set<Trophy> trophies;
     // private List<Trophy> trophies;
     //cascade = CascadeType.ALL means that any operation (e.g., save, delete, update) performed on the parent entity will also be applied to its related entities.
@@ -38,7 +43,29 @@ public class FootballClub {
 
 
     @ManyToMany
+    @JoinTable(
+            name = "footballclub_color", // Name of the join table
+            joinColumns = @JoinColumn(name = "club_id"),
+            inverseJoinColumns = @JoinColumn(name = "color_id")
+    )
     private Set<Color> colors;
+
+    public FootballClub(String name, Integer foundingYear) {
+        this.name = name;
+        this.foundingYear = foundingYear;
+    }
+
+    public FootballClub() {
+
+    }
+
+    @ManyToMany
+    @JoinTable(
+            name = "footballclub_footballer", // Join table name
+            joinColumns = @JoinColumn(name = "club_id"),
+            inverseJoinColumns = @JoinColumn(name = "footballer_id")
+    )
+    private Set<Footballer> footballers;
 
     public String getColorString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -98,11 +125,27 @@ public class FootballClub {
         this.colors = colors;
     }
 
+    public Set<Footballer> getFootballers() {
+        return footballers;
+    }
+
+    public void setFootballers(Set<Footballer> footballers) {
+        this.footballers = footballers;
+    }
+
     public Set<Trophy> getTrophies() {
         return trophies;
     }
 
     public void setTrophies(Set<Trophy> trophies) {
         this.trophies = trophies;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
